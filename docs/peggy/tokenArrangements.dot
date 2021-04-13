@@ -1,0 +1,21 @@
+digraph G {
+    subgraph cluster_evm_chains {
+        label="EVM chains"
+        
+        subgraph cluster_etherum {
+            label="Ethereum"
+            EthereumRowan [label="Rowan"]
+            Ethereum [label="Native token (Ethereum, address 0x0)"]
+            BridgeBank [label="Sifchain's BridgeBank contract"]
+            EthereumLog [label="Ethereum log events"]
+            BridgeBank -> EthereumLog
+            Transfers [label="Transfers to BridgeBank"]
+            Transfers -> BridgeBank
+        }
+   }
+   ebrelayer -> EthereumLog [label="ebrelayers connect to the Ethereum log\nand watch for events"]
+   subgraph cluster_sifchain {
+       SifchainEthereum [label="Ethereum"]
+   }
+   eth -> ceth
+}
