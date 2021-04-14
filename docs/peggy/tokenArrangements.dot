@@ -14,12 +14,12 @@ digraph G {
             EthereumSampleERC20Token
         }
         subgraph cluster_binance {
-            label="BinanceChain"
+            label="Binance Smart Chain"
             BinanceRowan [label="Rowan"]
             Bnb [label="Native token (BNB, address 0x0)"]
             BinanceBridgeBank [label="Sifchain's BridgeBank contract"]
             BinanceLog [label="Binance log events\nfor a single transaction"]
-            BridgeBank -> BinanceLog
+            BinanceBridgeBank -> BinanceLog
             BinanceTransfers [label="Transfers to BridgeBank"]
             BinanceTransfers -> BinanceBridgeBank
             BinanceSampleERC20Token
@@ -27,15 +27,19 @@ digraph G {
    }
    ebrelayer -> EthereumLog [label="ebrelayers connect to the Ethereum log\nand watch for events"]
    ebrelayer -> BinanceLog [label="ebrelayers connect to the Binance log\nand watch for events"]
+   ebrelayer -> SifchainLog
    subgraph cluster_sifchain {
        label="Sifchain"
        SifchainEthereum [label="Ethereum"]
        SifchainRowan [label="Rowan"]
+       SifchainLog
+
        subgraph cluster_sample_user {
-           label="User wallet"
+           label="User account on sifchain"
            SifchainEthereumInUserWallet [label="Ethereum"]
            SifchainRowanInUserWallet [label="Rowan"]
            UsdtInUserWallet [label="USDT"]
        }
+       UsdtInUserWallet -> SifchainLog
    }
 }
