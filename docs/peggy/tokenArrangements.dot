@@ -27,11 +27,9 @@ digraph G {
    }
    ebrelayer -> EthereumLog [label="ebrelayers connect to the Ethereum log\nand watch for events"]
    ebrelayer -> BinanceLog [label="ebrelayers connect to the Binance log\nand watch for events"]
-   ebrelayer -> SifchainLog
+   ebrelayer -> SifchainLog [label="ebrelayers connect to the Sifchain log\nand watch for events"]
    subgraph cluster_sifchain {
        label="Sifchain"
-       SifchainEthereum [label="Ethereum"]
-       SifchainRowan [label="Rowan"]
        SifchainLog
 
        subgraph cluster_sample_user {
@@ -40,6 +38,6 @@ digraph G {
            SifchainRowanInUserWallet [label="Rowan"]
            UsdtInUserWallet [label="USDT"]
        }
-       UsdtInUserWallet -> SifchainLog
+       UsdtInUserWallet -> SifchainLog [label="burn USDT on Sifchain to eventually get USDT on Ethereum"]
    }
 }
