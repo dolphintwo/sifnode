@@ -1,0 +1,6 @@
+digraph G {
+    sifethusdt -> bnbsifusdt
+    ethusdt -> sifethusdt
+    sifethusdt -> ethusdt
+    bnbsifusdt -> sifethusdt
+}
