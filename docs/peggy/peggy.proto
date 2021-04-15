@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+enum NetworkDescriptor {
+  Testing = 0;
+  Ethereum = 1;
+  BinanceSmartChain = 2;
+};
+
+// Used to lock
+message Lock {
+  string tokenAddress = 1;
+  NetworkDescriptor networkDescriptor = 2;
+  bytes amount = 3;
+}

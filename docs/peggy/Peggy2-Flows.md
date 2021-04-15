@@ -42,16 +42,16 @@
       - For each log message, ebrelayer does:
         - Send sif1pvnu2kh826vn8r0ttlgt82hsmfknvcnf7qmpvk 1000000 of
           coin/1/0xdac17f958d2ee523a2206206994597c13d831ec7/6, and include the ethereum transaction hash in the sending message
-            - ensures we can make sure we never process a transaction twice
+            - including the ethereum hash ensures we can make sure we never process a transaction twice
         - Once all log messages in a block have been processed, record in sifchain that the ethereum block has
           been processed
             - reduces startup time for ebrelayer, since it can just start processing ethereum blocks at the most recent block number
-        - 
     - End state
       - ```sifnodecli q auth account sif1pvnu2kh826vn8r0ttlgt82hsmfknvcnf7qmpvk``` returns
         ```{"coin/1/0xdac17f958d2ee523a2206206994597c13d831ec7/6": 1000000}```
       - Freya has 1000000 fewer USDT
       - ebrelayer has recorded (on sifchain) that a particular ethereum block has been processed
+      - ebrelayer
 1. Rowan exported to Ethereum
 - A user sends a lock tx with the sifnodecli specifying rowan as the token to lock up, the amount of tokens to send, and the desired ethereum address recipient. This TX emits a cosmos event with all of these data fields.
 - A relayer has subscribed to these cosmos events and hears them. Upon hearing the event, the relayer takes all of those data fields of eth address, token amount and token type, and packages it into an ethereum transaction. This transaction gets submitted to the CosmosBridge contract by calling ```newProphecyClaim```. Other relayers do the same.
