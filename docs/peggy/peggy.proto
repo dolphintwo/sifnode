@@ -1,14 +1,47 @@
 syntax = "proto3";
 
 enum NetworkDescriptor {
-  Testing = 0;
+  Zero = 0; // protobuf enums must start with 0
   Ethereum = 1;
   BinanceSmartChain = 2;
 };
 
-// Used to lock
-message Lock {
-  string tokenAddress = 1;
-  NetworkDescriptor networkDescriptor = 2;
+message CoinMetadata {
+  string address = 2;
+  NetworkDescriptor networkDescriptor = 3; // The original network for the token
+  int32 decimals = 4;
+  string name = 5;
+  string symbol = 6;
+}
+
+// there's a function from CoinMetadata to denom, and denom to CoinMetadata is a lookup on the map in CoinMetadataKeeper
+
+message CoinMetadataKeeper {
+  // coins contains a map of denom (calculated any way we wish)
+  // to CoinMetadata.  When a coin is imported,
+  map <string, CoinMetadata> coins = 1;
+}
+
+message Import {
+  CoinMetadata coin = 1;
   bytes amount = 3;
+  bytes importingAccount = 4;
+  bytes destinationAccount = 5;
+}
+
+// Export a token from Sifchain
+message Export {
+  string denom = 1;
+  bytes amount = 2;
+  bytes destinationNetworkDescriptor = 3;
+  bytes destinationAddress = 4;
+  bytes sifchainSrcAddress = 5;
+  uint64 sifchainTransactionSequenceNumber = 6;
+}
+
+// Emitted on EVM when a new token is created
+message TokenCreated {
+  CoinMetadata coinMetadata = 1;
+  bytes sifchainDenom = 2;
+  bytes address = 3;
 }

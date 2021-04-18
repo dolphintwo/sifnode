@@ -32,6 +32,8 @@
           - decimals
         - Note that no decisions need to be made about normalizing these fields; 
           the exact values stored on sifchain will be used
+        - Since ERC20 tokens are free to change the values of any of those fields, we will
+          use the value from the very first 
       - Relayers call the smart contract action to deploy an ERC20 token for
         coin/1/0xdac17f958d2ee523a2206206994597c13d831ec7/6
           - Need to reach the consensus threshold before this executes
@@ -87,7 +89,25 @@
       - ebrelayer records on sifchain:
         - the latest ethereum block number that has all transactions processed
         - the ethereum transaction and block number for each transfer
-
+- ethusdt -> sifethusdt / USDT on Ethereum to USDT on Sifchain
+  - Scenario: Freya wants to export USDT from Ethereum to Sifchain
+    - Actions
+      - On Ethereum
+        - Freya authorizes BridgeBank to spend USDT
+        - Freya sends a lock command to BridgeBank with the following:
+          - amount
+          - 0xdac17f958d2ee523a2206206994597c13d831ec7 - the address of USDT
+          - A sifchain destination address
+        - BridgeBank recevies the tokens and emits an event with those same parameters
+          - Note that BridgeBank doesn't need to specify its own network descriptor; that's
+            handled by the relayers
+      - Relayers
+        - Send the following to sifchain:
+          - 
+- sifethusdt -> ethusdt / USDT on Sifchain to USDT on Ethereum
+  - Scenario: Freya wants to export coin/1/0xdac17f958d2ee523a2206206994597c13d831ec7/6 (a token from
+    Ethereum mainnet, network descriptor 1) to Ethereum.
+    - Look up 
 
 
 - Rowan on Ethereum -> Rowan on Sifchain
@@ -142,3 +162,9 @@ event LogBurn(
 ```
 - Relayers have subscribed to the BridgeBank smart contract, hear this transaction and package it up into a new Oracle Claim and submit the transaction to cosmos.
 - Once enough relayers have signed off on this Oracle Claim on cosmos, then pegged assets are unlocked on cosmos and sent to the recipient.
+
+
+Definitions:
+- LokiBux
+  - an ERC20 that does every random thing it can and still be an ERC20 token.  Calls to decimals() for example
+    return a random number on every call.

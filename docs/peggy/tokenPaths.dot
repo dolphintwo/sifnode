@@ -1,6 +1,6 @@
 digraph G {
-    sifethusdt -> bnbsifusdt
-    ethusdt -> sifethusdt
-    sifethusdt -> ethusdt
-    bnbsifusdt -> sifethusdt
+    ethusdt -> sifethusdt [label="import"]
+    sifethusdt -> bnbsifusdt [label="export"]
+    sifethusdt -> ethusdt [label="export"]
+    bnbsifusdt -> sifethusdt [label="import"]
 }
