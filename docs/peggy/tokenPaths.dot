@@ -1,4 +1,20 @@
 digraph G {
+    subgraph cluster_sifchain {
+        label="Sifchain"
+        sifethusdt
+    }
+    subgraph cluster_evm {
+        label="EVM chains"
+        subgraph cluster_etherum {
+            label="Ethereum"
+            ethusdt
+        }
+        subgraph cluster_bsc {
+            label="Binance Smart Chain (BSC)"
+            bnbsifusdt
+        }
+    }
+
     ethusdt -> sifethusdt [label="import"]
     sifethusdt -> bnbsifusdt [label="export"]
     sifethusdt -> ethusdt [label="export"]
