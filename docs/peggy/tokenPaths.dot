@@ -7,15 +7,21 @@ digraph G {
         label="Sifchain"
         subgraph cluster_coins {
             label="Accounts"
-            sifethusdt [label="{sifethusdt|denom: coin/1/0xdac1.../6}"]
+            sifethusdt [label="{sifesifetheththusdt|denom: coin/1/0xdac1.../6}"]
+            sifetheth [label="{sifetheth|denom: coin/1/0x0000.../18}"]
         }
 
         subgraph cluster_coinmetadatakeeper {
             label="CoinMetadataKeeper"
             sifethusdtdenom [label="coin/1/0xdac1.../6}"]
-            sifethusdtmetdata [label="{address: 0xdac1...|name: Tether USDT|symbol:USDT|decimals: 6}"]
+            sifethusdtmetdata [label="{address: 0xdac1...|name: Tether USDT|symbol:USDT|decimals: 6||Note: this record was created\non the first import of 0xdac1... \nfrom Ethereum}"]
             sifethusdtdenom -> sifethusdtmetdata
             sifethusdt -> sifethusdtdenom
+
+            sifethethdenom [label="coin/1/0x0000.../18}"]
+            sifethethmetdata [label="{address: 0x0000...|name: Ethereum|symbol:ETH|decimals: 18||Note: this record was created \nby Sifchain during chain startup}"]
+            sifethethdenom -> sifethethmetdata
+            sifetheth -> sifethethdenom
         }
     }
     subgraph cluster_evm {
