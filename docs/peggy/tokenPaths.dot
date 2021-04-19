@@ -1,22 +1,41 @@
 digraph G {
+    node [
+        shape = "record"
+    ]
+
     subgraph cluster_sifchain {
         label="Sifchain"
-        sifethusdt
+        subgraph cluster_coins {
+            label="Accounts"
+            sifethusdt [label="{sifethusdt|denom: coin/1/0xdac1.../6}"]
+        }
+
+        subgraph cluster_coinmetadatakeeper {
+            label="CoinMetadataKeeper"
+            sifethusdtdenom [label="coin/1/0xdac1.../6}"]
+            sifethusdtmetdata [label="{address: 0xdac1...|name: Tether USDT|symbol:USDT|decimals: 6}"]
+            sifethusdtdenom -> sifethusdtmetdata
+            sifethusdt -> sifethusdtdenom
+        }
     }
     subgraph cluster_evm {
         label="EVM chains"
         subgraph cluster_etherum {
-            label="Ethereum"
+            label="Ethereum mainnet"
+            etheth
             ethusdt
         }
         subgraph cluster_bsc {
             label="Binance Smart Chain (BSC)"
-            bnbsifusdt
+            bnbsifethusdt
         }
     }
 
+    etheth [label="{Ethereum itself (etheth)|address: 0x0000...|name: None|symbol: None||Note: Not an ERC20 token, no name, no symbol}"]
+    ethusdt [label="{Actual USDT on Ethereum (ethusdt)|address: 0xdac1...|name: Tether USDT|symbol: USDT}"]
+    bnbsifethusdt [label="{Sifchain holder for USDT on Ethereum (bnbsifethusdt)||name: Tether USDT|symbol: USDT|sifchainDenom: coin/1/0xdac1.../6||note: created by Sifchain}"]
     ethusdt -> sifethusdt [label="import"]
-    sifethusdt -> bnbsifusdt [label="export"]
+    sifethusdt -> bnbsifethusdt [label="export"]
     sifethusdt -> ethusdt [label="export"]
-    bnbsifusdt -> sifethusdt [label="import"]
+    bnbsifethusdt -> sifethusdt [label="import"]
 }
