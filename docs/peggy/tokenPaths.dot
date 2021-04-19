@@ -7,7 +7,7 @@ digraph G {
         label="Sifchain"
         subgraph cluster_coins {
             label="Accounts"
-            sifethusdt [label="{sifesifetheththusdt|denom: coin/1/0xdac1.../6}"]
+            sifethusdt [label="{sifethusdt|denom: coin/1/0xdac1.../6}"]
             sifetheth [label="{sifetheth|denom: coin/1/0x0000.../18}"]
         }
 
@@ -22,6 +22,13 @@ digraph G {
             sifethethmetdata [label="{address: 0x0000...|name: Ethereum|symbol:ETH|decimals: 18||Note: this record was created \nby Sifchain during chain startup}"]
             sifethethdenom -> sifethethmetdata
             sifetheth -> sifethethdenom
+        }
+        subgraph cluster_coinaddresskeeper {
+            label="CoinAddressKeeper"
+            sifethdenomandnetworkdescriptor [label="coin/1/0xdac1.../6 + 1"]
+            sifethusdtaddr [label="{0xdac1||Note that the address\nfor other network descriptors\nare different}"]
+            sifethusdt -> sifethdenomandnetworkdescriptor
+            sifethdenomandnetworkdescriptor -> sifethusdtaddr
         }
     }
     subgraph cluster_evm {
